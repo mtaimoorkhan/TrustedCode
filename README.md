@@ -12,3 +12,5 @@ This repository contains Python examples that were translated to WhyML for forma
 - 06_gcd: Greatest Common Divisor
 - 07_binary_search: Binary Search
 - 08_array_copy: Array Copying
+- 09_factorial: Factorial Function
+- 10_array_minimum: Finding minimum of array
