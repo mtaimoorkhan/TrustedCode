@@ -18,7 +18,7 @@ from config import (
 
 def chatbot(state: State):
     system_msg = SystemMessage(content=TYPING_PROMPT)
-    # Directly access the .content attribute, which is standard for message objects.
+    # Directly access the .content attribute.
     user_content = state["messages"][-1].content
     human_msg = HumanMessage(content=user_content)
 
@@ -39,7 +39,7 @@ def chatbot(state: State):
 def whyml_translator(state: State):
     print("whyml_translator function called!")
 
-    # LangGraph persists state automatically. Only return changed fields.
+    # LangGraph only return changed fields.
     result = {
         "messages": [],
         "conversion_timeout": False,
@@ -94,7 +94,7 @@ def whyml_executor(state: State):
         # The WhyML code was already cleaned in the previous node.
         whyml_code = state["messages"][-1].content
 
-    # The list of attempts is already in the state; append and update.
+    #  Append and update list of steps.
     whyml_attempts = state.get("whyml_attempts", [])
     whyml_attempts.append(whyml_code)
 
@@ -188,7 +188,7 @@ def error_corrector(state: State):
     """
     print("error_corrector function called!")
 
-    # A more structured and forceful prompt that demands analysis and a plan.
+    # Error analysis prompt.
     ERROR_ANALYSIS_PROMPT = """You are an expert WhyML debugger and formal verification expert with PHD level mathematics knowledge. Your task is to fix a failing WhyML code translation by analyzing the complete history of attempts and errors to identify the root cause. You must not repeat past mistakes.  
     if you keep getting the same error after 2 tries, do not focus on the particular error, instead, focus on the error history and critically analyse the overarching problem you are trying to solve. Be precise, consistent, methodological and write minimal code that satisties the solution.  
 
@@ -212,8 +212,7 @@ def error_corrector(state: State):
     attempts = state.get("whyml_attempts", [])
     errors = state.get("errors", [])
 
-    # Build a clean, formatted history string.
-    # This makes the pattern of errors much clearer for the model to analyze.
+    # Building a clean, formatted history string so that the errors can be properly used by the LLM to minimise hallucinations.
     error_history_str = ""
     for i, (attempt, error) in enumerate(zip(attempts, errors)):
         error_history_str += f"--- ATTEMPT {i+1} ---\n"
@@ -226,7 +225,7 @@ def error_corrector(state: State):
         error_history=error_history_str
     )
 
-    # Invoke the LLM with a single, powerful prompt that contains the full context.
+    # Invoke the LLM.
     response = llm.invoke([HumanMessage(content=final_prompt)])
     response_content = response.content
 

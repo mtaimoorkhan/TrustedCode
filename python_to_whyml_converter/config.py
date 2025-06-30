@@ -53,5 +53,5 @@ Categories:
 
 Output the category code (e.g., EKnow) and 20 words max of explination of why you think the capability gap arose:"""
 
-# Constants
+# Can default ot a sample WhyML sample file if LLM unable to generate code (now obsolete)
 SAMPLE_WHYML_FILE = "sample.mlw"
