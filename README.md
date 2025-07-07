@@ -61,11 +61,9 @@ This project uses UV for fast Python package management
        "langchain>=0.3.25", 
        "langchain-anthropic>=0.3.15",
        "langchain-core>=0.3.65",
-       "langchain-ollama>=0.3.3",
        "langgraph>=0.4.8",
        "langsmith>=0.3.45",
        "pandas>=2.3.0",
-       "pygraphviz>=1.14",
        "python-dotenv>=1.1.0"]
    ```
 
