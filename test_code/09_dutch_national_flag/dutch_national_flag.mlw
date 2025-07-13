@@ -1,0 +1,41 @@
+module DutchNationalFlag
+use int.Int
+use array.Array
+use array.ArraySwap
+use ref.Ref
+let dutch_national_flag (arr: array int) : unit
+  requires { forall i. 0 <= i < length arr -> 0 <= arr[i] <= 2 }
+  ensures { forall i j. 0 <= i < j < length arr -> 
+    (arr[i] = 0 /\ arr[j] = 1) \/ 
+    (arr[i] = 0 /\ arr[j] = 2) \/ 
+    (arr[i] = 1 /\ arr[j] = 2) \/ 
+    arr[i] = arr[j] }
+  ensures { forall i. 0 <= i < length arr -> 0 <= arr[i] <= 2 }
+=
+  if length arr = 0 then return;
+  let low = ref 0 in
+  let mid = ref 0 in
+  let high = ref (length arr - 1) in
+  while !mid <= !high do
+    invariant { 0 <= !low <= !mid <= length arr }
+    invariant { -1 <= !high < length arr }
+    invariant { !mid <= !high + 1 }
+    invariant { forall i. 0 <= i < !low -> arr[i] = 0 }
+    invariant { forall i. !low <= i < !mid -> arr[i] = 1 }
+    invariant { forall i. !high < i < length arr -> arr[i] = 2 }
+    invariant { forall i. 0 <= i < length arr -> 0 <= arr[i] <= 2 }
+    variant { !high - !mid + 1 }
+    if arr[!mid] = 0 then begin
+      swap arr !low !mid;
+      low := !low + 1;
+      mid := !mid + 1
+    end
+    else if arr[!mid] = 1 then begin
+      mid := !mid + 1
+    end
+    else begin
+      swap arr !mid !high;
+      high := !high - 1
+    end
+  done
+end

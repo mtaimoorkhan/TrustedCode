@@ -1,0 +1,29 @@
+module BubbleSort
+  use int.Int
+  use array.Array
+  use array.ArraySwap
+  use array.ArrayPermut
+  predicate sorted (a: array int) = 
+    forall i j. 0 <= i <= j < length a -> a[i] <= a[j]
+  predicate sorted_sub (a: array int) (l u: int) =
+    forall i j. l <= i <= j < u -> a[i] <= a[j]
+  let bubble_sort (arr: array int) : unit
+    requires { 0 <= length arr }
+    ensures { sorted arr }
+    ensures { permut_all (old arr) arr }
+  =
+    let n = length arr in
+    for i = 0 to n - 1 do
+      invariant { permut_all (old arr) arr }
+      invariant { sorted_sub arr (n - i) n }
+      invariant { forall k1 k2. 0 <= k1 < n - i <= k2 < n -> arr[k1] <= arr[k2] }
+      for j = 0 to n - i - 2 do
+        invariant { permut_all (old arr) arr }
+        invariant { sorted_sub arr (n - i) n }
+        invariant { forall k1 k2. 0 <= k1 < n - i <= k2 < n -> arr[k1] <= arr[k2] }
+        invariant { forall k. j + 1 <= k < n - i -> arr[j + 1] <= arr[k] }
+        if arr[j] > arr[j + 1] then
+          swap arr j (j + 1)
+      done
+    done
+end
