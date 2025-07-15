@@ -1,6 +1,6 @@
 # Trusted Code: Python to WhyML Converter
 
-A framework that automatically translates Python functions into Why3 specifications for formal verification. The system uses LangGraph for workflow orchestration and Claude for intelligent code translation, with iterative error correction and a capability gap analysis.
+A framework that automatically translates Python functions into Why3 specifications for formal verification. The system uses LangGraph for workflow orchestration and Claude for code translation, with iterative error correction and a capability gap analysis.
 
 The system follows a multi-stage pipeline:
 
