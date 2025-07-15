@@ -76,6 +76,6 @@ uv run main.py path/to/python.py
 
 ## Output
 
-**Results Table**: Comprehensive analysis saved to `whyml_conversion_results.csv`
+**Results Table**: Analysis saved to `whyml_conversion_results.csv`
 
 **Graph Visualization**: Workflow diagram saved as `graph_visualization.png`
